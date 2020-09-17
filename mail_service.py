@@ -6,8 +6,9 @@ import quopri
 import os
 import time
 import telebot
+import sqlite3
 
-attachments_dir = "//home//foxgun//da93mail//files"
+attachments_dir = "//files//"
 token = "1010830562:AAHeFoZaEuK7FgiP8kwDtbofuPwHgtMJDL8"
 bot = telebot.TeleBot(token)
 ID = -1001445233947 # "716986295"
@@ -95,6 +96,10 @@ if __name__ == "__main__":
     imap_url = "imap.ukr.net"
 
     send_report = 0
+
+    connection = sqlite3.connect('db.sqlite3')
+    cursor = connection.cursor()
+
     while True:
         post_box = imaplib.IMAP4_SSL(imap_url)
         post_box.login(username, password)
@@ -121,13 +126,18 @@ if __name__ == "__main__":
                 subject = "Заголовок: " + get_encoded_word(subject) + "\n"
                 letter = receiver + sender + subject + body
 
-                with open('last_letter.txt', 'r') as f:
-                    last_letter = f.read()
+                """with open('last_letter.txt', 'r') as f:
+                    last_letter = f.read()"""
+                cursor.execute('SELECT last FROM Mail')
+                last_letter = cursor.fetchone()[0]
 
                 if letter.split() != last_letter.split():
 
-                    with open('last_letter.txt', 'w') as f:
-                        f.write(letter)
+                    """with open('last_letter.txt', 'w') as f:
+                        f.write(letter)"""
+
+                    cursor.execute('UPDATE Mail SET last=?', (letter,))
+                    connection.commit()
 
                     print("пересилаю...")
                     if len(letter) > 4096:
