@@ -1,0 +1,1 @@
+worker: python mail_service.py $PORT
