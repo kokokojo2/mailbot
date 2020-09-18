@@ -91,8 +91,8 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = 'dimoonz@ukr.net'#"iasa-da92@ukr.net"
-    password = 'IY4ZRxxQ3RfodCPd' #"9rhj7QTsiCaovoAd"
+    username = "iasa-da92@ukr.net"
+    password ="9rhj7QTsiCaovoAd"# 'IY4ZRxxQ3RfodCPd' #
     imap_url = "imap.ukr.net"
 
     print(username, password)
