@@ -121,8 +121,6 @@ if __name__ == "__main__":
 
                 body = get_body(email_obj)
 
-                paths = get_attachments(email_obj)
-
                 receiver = "Кому: " + get_encoded_word(receiver) + "\n"
                 sender = "Хто: " + get_encoded_word(sender) + "\n"
                 subject = "Заголовок: " + get_encoded_word(subject) + "\n"
@@ -134,6 +132,8 @@ if __name__ == "__main__":
                 last_letter = cursor.fetchone()[0]
 
                 if letter.split() != last_letter.split():
+
+                    paths = get_attachments(email_obj)
 
                     """with open('last_letter.txt', 'w') as f:
                         f.write(letter)"""
