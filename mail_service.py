@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     while True:
         post_box = imaplib.IMAP4_SSL(imap_url)
-        post_box.login(username, password)
+        post_box.login(username, testpasw)
 
         try:
             email_obj = get_message(post_box)
