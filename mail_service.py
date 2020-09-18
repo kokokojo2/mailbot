@@ -91,12 +91,12 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = "dimoonz@ukr.net"
+    username = "da-92@ukr.net"
     password = "9rhj7QTsiCaovoAd"
-    testpasw = 'IY4ZRxxQ3RfodCPd'
+    testpasw = 'IY4ZRxxQ3RfodCPd' # від тест-пошти
     imap_url = "imap.ukr.net"
 
-    print(username, testpasw)
+    print(username, password)
     send_report = 0
 
     connection = sqlite3.connect('db.sqlite3')
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     while True:
         post_box = imaplib.IMAP4_SSL(imap_url)
-        post_box.login(username, testpasw)
+        post_box.login(username, password)
 
         try:
             email_obj = get_message(post_box)
