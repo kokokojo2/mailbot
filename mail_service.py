@@ -8,7 +8,7 @@ import time
 import telebot
 import sqlite3
 
-attachments_dir = "//files//"
+attachments_dir = os.getcwd() + '/files'
 token = "1010830562:AAHeFoZaEuK7FgiP8kwDtbofuPwHgtMJDL8"
 bot = telebot.TeleBot(token)
 ID = -1001445233947 # "716986295"
@@ -91,11 +91,12 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = "iasa-da92@ukr.net"
-    password ="9rhj7QTsiCaovoAd"# 'IY4ZRxxQ3RfodCPd' #
+    username = "dimoonz@ukr.net"
+    password = "9rhj7QTsiCaovoAd"
+    testpasw = 'IY4ZRxxQ3RfodCPd'
     imap_url = "imap.ukr.net"
 
-    print(username, password)
+    print(username, testpasw)
     send_report = 0
 
     connection = sqlite3.connect('db.sqlite3')
@@ -119,8 +120,6 @@ if __name__ == "__main__":
                 subject = email_obj["Subject"]
 
                 body = get_body(email_obj)
-
-                print(os.getcwd())
 
                 paths = get_attachments(email_obj)
 
