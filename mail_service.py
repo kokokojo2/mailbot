@@ -91,10 +91,11 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = "iasa-da92@ukr.net"
-    password = "9rhj7QTsiCaovoAd"
-    imap_url = "imap.ukr.net"
+    username = 'iasada93mail@gmail.com'#"iasa-da92@ukr.net"
+    password = 'zevec_plachet2' #"9rhj7QTsiCaovoAd"
+    imap_url =  'imap.gmail.com' # "imap.ukr.net"
 
+    print(username, password)
     send_report = 0
 
     connection = sqlite3.connect('db.sqlite3')
