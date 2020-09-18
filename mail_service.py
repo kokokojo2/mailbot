@@ -91,10 +91,10 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = 'iasada93mail@gmail.com'#"iasa-da92@ukr.net"
-    password = 'zevec_plachet2' #"9rhj7QTsiCaovoAd"
-    imap_url =  'imap.gmail.com' # "imap.ukr.net"
-    special_for_google = '993'
+    username = 'dimoonz@gmail.com'#"iasa-da92@ukr.net"
+    password = 'IY4ZRxxQ3RfodCPd' #"9rhj7QTsiCaovoAd"
+    imap_url = "imap.ukr.net"
+
     print(username, password)
     send_report = 0
 
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     cursor = connection.cursor()
 
     while True:
-        post_box = imaplib.IMAP4_SSL(imap_url, special_for_google)
+        post_box = imaplib.IMAP4_SSL(imap_url)
         post_box.login(username, password)
 
         try:
