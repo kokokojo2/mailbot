@@ -120,6 +120,8 @@ if __name__ == "__main__":
 
                 body = get_body(email_obj)
 
+                print(os.getcwd())
+
                 paths = get_attachments(email_obj)
 
                 receiver = "Кому: " + get_encoded_word(receiver) + "\n"
