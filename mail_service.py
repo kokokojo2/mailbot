@@ -7,6 +7,7 @@ import os
 import time
 import telebot
 import sqlite3
+import datetime
 
 attachments_dir = os.getcwd() + '/files'
 token = "1010830562:AAHeFoZaEuK7FgiP8kwDtbofuPwHgtMJDL8"
@@ -91,7 +92,7 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = "iasa-da92@ukr.net"
+    username = "dimoonz@ukr.net"
     password = "9rhj7QTsiCaovoAd"
     testpasw = 'IY4ZRxxQ3RfodCPd' # від тест-пошти
     imap_url = "imap.ukr.net"
@@ -104,7 +105,7 @@ if __name__ == "__main__":
 
     while True:
         post_box = imaplib.IMAP4_SSL(imap_url)
-        post_box.login(username, password)
+        post_box.login(username, testpasw)
 
         try:
             email_obj = get_message(post_box)
@@ -119,26 +120,37 @@ if __name__ == "__main__":
                 sender = email_obj["From"]
                 subject = email_obj["Subject"]
 
+                date = email_obj["Date"]
+
+                datetime_obj = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z')
+                print(datetime_obj)
+                cur_timestamp = datetime.datetime.timestamp(datetime_obj)
+
                 body = get_body(email_obj)
 
-                receiver = "Кому: " + get_encoded_word(receiver) + "\n"
-                sender = "Хто: " + get_encoded_word(sender) + "\n"
-                subject = "Заголовок: " + get_encoded_word(subject) + "\n"
-                letter = receiver + sender + subject + body
+                receiver = "*Кому*: _" + get_encoded_word(receiver) + "_\n"
+                sender = "*Хто*: _" + get_encoded_word(sender) + "_\n\n"
+
+                when = "*Коли*: _" + datetime.datetime.strftime(datetime_obj + datetime.timedelta(hours=3), '%H:%M %d.%m.%Y') + '_\n'
+
+                subject = "*" + get_encoded_word(subject) + "*\n\n"
+                letter = receiver + sender + when + subject + body
 
                 """with open('last_letter.txt', 'r') as f:
                     last_letter = f.read()"""
-                cursor.execute('SELECT last FROM Mail')
-                last_letter = cursor.fetchone()[0]
 
-                if letter.split() != last_letter.split():
+                cursor.execute('SELECT last, time FROM Mail')
+                last_letter, last_timestamp = cursor.fetchone()
+                print(datetime.datetime.timestamp(datetime_obj) != datetime.datetime.now())
+
+                if cur_timestamp != last_timestamp and letter.split() != last_letter.split():
 
                     paths = get_attachments(email_obj)
 
                     """with open('last_letter.txt', 'w') as f:
                         f.write(letter)"""
 
-                    cursor.execute('UPDATE Mail SET last=?', (letter,))
+                    cursor.execute('UPDATE Mail SET last=?, time=?', (letter, cur_timestamp))
                     connection.commit()
 
                     print("пересилаю...")
@@ -149,13 +161,13 @@ if __name__ == "__main__":
                         while i < len(letter):
                             print("part", j)
                             if len(letter[i:]) < 4096:
-                                bot.send_message(ID, letter[i:])
+                                bot.send_message(ID, letter[i:], parse_mode='Markdown')
                                 break
                             bot.send_message(ID, letter[i:i + 4096])
                             i += 4096
                             j += 1
                     else:
-                        bot.send_message(ID, letter)
+                        bot.send_message(ID, letter, parse_mode='Markdown')
 
                     if len(paths):
                         for path in paths:
