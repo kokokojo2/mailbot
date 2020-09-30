@@ -92,7 +92,7 @@ def get_encoded_word(message):
 
 if __name__ == "__main__":
     print("starting")
-    username = "dimoonz@ukr.net"
+    username = "iasa-da92@ukr.net"
     password = "9rhj7QTsiCaovoAd"
     testpasw = 'IY4ZRxxQ3RfodCPd' # від тест-пошти
     imap_url = "imap.ukr.net"
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     while True:
         post_box = imaplib.IMAP4_SSL(imap_url)
-        post_box.login(username, testpasw)
+        post_box.login(username, password)
 
         try:
             email_obj = get_message(post_box)
@@ -161,13 +161,13 @@ if __name__ == "__main__":
                         while i < len(letter):
                             print("part", j)
                             if len(letter[i:]) < 4096:
-                                bot.send_message(ID, letter[i:], parse_mode='Markdown')
+                                bot.send_message(ID, letter[i:], parse_mode='MARKDOWN')
                                 break
                             bot.send_message(ID, letter[i:i + 4096])
                             i += 4096
                             j += 1
                     else:
-                        bot.send_message(ID, letter, parse_mode='Markdown')
+                        bot.send_message(ID, letter, parse_mode='MARKDOWN')
 
                     if len(paths):
                         for path in paths:
