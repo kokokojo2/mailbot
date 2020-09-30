@@ -10,9 +10,9 @@ import sqlite3
 import datetime
 
 attachments_dir = os.getcwd() + '/files'
-token = "1010830562:AAHeFoZaEuK7FgiP8kwDtbofuPwHgtMJDL8"
+token = ""
 bot = telebot.TeleBot(token)
-ID = -1001445233947 # "716986295"
+ID = ''
 
 
 def encoded_words_to_text(encoded_words):
